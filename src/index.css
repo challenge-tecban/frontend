@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@keyframes fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+.animate-fade-in {
+	animation: fade-in 1.2s ease-in;
+}
+
+/* Gradientes e efeitos para tema vermelho e preto */
+.bg-gradient-red-black {
+	background: linear-gradient(135deg, #000 0%, #2d0000 40%, #8b0000 100%);
+}
+
+.text-gradient-red {
+	background: linear-gradient(90deg, #ff2a2a, #b30000, #ff0000);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	color: transparent;
+}
+
+/* Painel e efeitos */
+.shadow-panel { box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+
+/* Minimal utilities */
+.input-minimal:focus { box-shadow: 0 0 0 3px rgba(179,0,0,0.08); }
+
+@media (max-width: 640px) {
+	.w-40 { width: 9rem; height: 9rem; }
+	.w-24 { width: 5.5rem; height: 5.5rem; }
+}
+
+/* Corner decorative connectors similar to the reference image */
+.corner-decor {
+	position: absolute;
+	width: 28%;
+	height: 28%;
+	pointer-events: none;
+	background-image: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+	mask-image: radial-gradient(circle at center, black 30%, transparent 60%);
+}
+.corner-decor.top-left { top: 0; left: 0; transform: translate(-6%, -6%); }
+.corner-decor.top-right { top: 0; right: 0; transform: translate(6%, -6%); }
+.corner-decor.bottom-left { bottom: 0; left: 0; transform: translate(-6%, 6%); }
+.corner-decor.bottom-right { bottom: 0; right: 0; transform: translate(6%, 6%); }
+
+/* Subtle panel shadow override for the new card */
+.bg-gray-900\/90 { background-color: rgba(17,24,39,0.9); }
+
+/* Focus ring for inputs */
+input:focus { box-shadow: 0 0 0 4px rgba(179,0,0,0.08); }
+
+/* Floating label styles */
+.floating { position: relative; }
+.floating-label {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+	transition: all 0.18s ease-out;
+	color: #9ca3af; /* gray-400 */
+	font-size: 0.875rem;
+}
+.floating input:focus + .floating-label,
+.floating-label.active {
+	top: -8px;
+	transform: translateY(0);
+	font-size: 0.6875rem;
+	color: #fca5a5; /* red-300 */
+}
+
+/* Dashboard specific tweaks */
+.sidebar { background: #0b0b0b }
+.modal-backdrop { background: rgba(0,0,0,0.6); }
+
+/* Slide-over panel (bottom-left) */
+.slide-panel {
+	animation: slideIn 220ms ease-out;
+}
+
+@keyframes slideIn {
+	from { transform: translateY(8px) translateX(-8px); opacity: 0 }
+	to { transform: translateY(0) translateX(0); opacity: 1 }
+}
