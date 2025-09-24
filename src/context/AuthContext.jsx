@@ -14,15 +14,52 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await api.get('/v1/auth/validate', { withCredentials: true });
             setIsAuthenticated(!!data?.valid);
+            
+            // If validate returns user data, use it
+            if (data?.user) {
+                setUser(data.user);
+                try { localStorage.setItem('user', JSON.stringify(data.user)); } catch (e) {}
+            } else {
+                // Fallback: try to restore user from localStorage
+                try {
+                    const savedUser = localStorage.getItem('user');
+                    if (savedUser) {
+                        const parsedUser = JSON.parse(savedUser);
+                        setUser(parsedUser);
+                    }
+                } catch (e) {
+                    console.error('Error parsing saved user:', e);
+                }
+            }
         } catch (error) {
             console.error("Error checking authentication:", error);
             setIsAuthenticated(false);
+            
+            // Even if auth fails, try to restore user from localStorage for display purposes
+            try {
+                const savedUser = localStorage.getItem('user');
+                if (savedUser) {
+                    const parsedUser = JSON.parse(savedUser);
+                    setUser(parsedUser);
+                }
+            } catch (e) {}
         } finally {
             setLoading(false);
         }
     }
 
     useEffect(() => {
+        // Try to restore user immediately from localStorage
+        try {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                const parsedUser = JSON.parse(savedUser);
+                setUser(parsedUser);
+            }
+        } catch (e) {
+            console.error('Error loading saved user:', e);
+        }
+        
         checkAuth();
     }, []);
 
